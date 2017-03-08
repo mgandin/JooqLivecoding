@@ -14,6 +14,8 @@
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <source.level>1.8</source.level>
         <target.level>1.8</target.level>
+        <org.jooq.version>3.9.1</org.jooq.version>
+        <h2.version>1.4.193</h2.version>
     </properties>
     <dependencies>
         <dependency>
@@ -33,17 +35,25 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>3.9.1</version>
+            <version>${org.jooq.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.193</version>
+            <version>${h2.version}</version>
         </dependency>
 
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+            </resource>
+            </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -53,6 +63,56 @@
                     <source>${source.level}</source>
                     <target>${target.level}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/org.jooq/jooq-codegen-maven -->
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${org.jooq.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>generate-h2</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <jdbc>
+                                <driver>org.h2.Driver</driver>
+                                <url>jdbc:h2:~/livecoding-jooq</url>
+                                <user>sa</user>
+                                <password></password>
+                            </jdbc>
+                            <generator>
+                                <database>
+                                    <name>org.jooq.util.h2.H2Database</name>
+                                    <includes>.*</includes>
+                                    <excludes></excludes>
+                                    <inputSchema>PUBLIC</inputSchema>
+                                    <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
+                                </database>
+                                <generate>
+                                    <deprecated>false</deprecated>
+                                    <instanceFields>true</instanceFields>
+                                    <pojos>true</pojos>
+                                </generate>
+                                <target>
+                                    <packageName>fr.mga.livecoding.db</packageName>
+                                    <directory>target/generated-sources</directory>
+                                </target>
+                            </generator>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
