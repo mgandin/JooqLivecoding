@@ -1,6 +1,7 @@
-package fr.mga.livecoding.jdbc;
+package com.lesfurets.db.dao;
 
-import fr.mga.livecoding.YearResult;
+import com.google.common.annotations.VisibleForTesting;
+import com.lesfurets.db.YearReport;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,20 +14,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class YearResultDao {
+public class LegacyYearResultDao {
 
-    private static String SELECT_YEAR_RESULT = "select departement,manager,netprofit,operatingexpense,turnover,creation_date "
-            + "from year_result where departement=? order by creation_date asc";
+    @VisibleForTesting
+    static String SELECT_YEAR_RESULT = "select DEPARTEMENT, "
+            + "MANAGER, "
+            + "NETPROFIT,"
+            + "OPERATINGEXPENSE, "
+            + "TURNOVER,"
+            + "CREATION_DATE "
+            + "FROM YEAR_RESULT "
+            + "WHERE DEPARTEMENT=? ORDER BY CREATION_DATE ASC";
 
     private final Connection connection;
 
-    public YearResultDao(Connection connection) {
+    public LegacyYearResultDao(Connection connection) {
         this.connection = connection;
     }
 
-    public List<YearResult> findYearResultBy(String departementToFind) {
+    public List<YearReport> findYearResultBy(String departementToFind) {
         try(PreparedStatement preparedStatement = connection.prepareStatement(SELECT_YEAR_RESULT)) {
-            List<YearResult> results = new ArrayList<>();
+            List<YearReport> results = new ArrayList<>();
             preparedStatement.setString(1, departementToFind);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -39,7 +47,7 @@ public class YearResultDao {
                 LocalDate localDate = Instant.ofEpochMilli(date.getTime())
                         .atZone(ZoneId.systemDefault())
                         .toLocalDate();
-                results.add(new YearResult(departement, manager, netProfit, operatingExpense, turnover, localDate));
+                results.add(new YearReport(departement, manager, netProfit, operatingExpense, turnover, localDate));
             }
             return results;
         } catch (SQLException e) {

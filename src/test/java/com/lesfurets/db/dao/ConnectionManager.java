@@ -1,4 +1,4 @@
-package fr.mga.livecoding;
+package com.lesfurets.db.dao;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

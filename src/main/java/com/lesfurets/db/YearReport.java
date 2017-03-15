@@ -1,9 +1,9 @@
-package fr.mga.livecoding;
+package com.lesfurets.db;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class YearResult {
+public class YearReport {
     private final String departement;
     private final String manager;
     private final Double netprofit;
@@ -11,7 +11,7 @@ public class YearResult {
     private final Double turnover;
     private final LocalDate creationDate;
 
-    public YearResult(String departement, String manager, Double netprofit, Double operatingexpense, Double turnover,
+    public YearReport(String departement, String manager, Double netprofit, Double operatingexpense, Double turnover,
             LocalDate creationDate) {
         this.departement = departement;
         this.manager = manager;
@@ -50,7 +50,7 @@ public class YearResult {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        YearResult that = (YearResult) o;
+        YearReport that = (YearReport) o;
         return Objects.equals(departement, that.departement) &&
                 Objects.equals(manager, that.manager) &&
                 Objects.equals(netprofit, that.netprofit) &&

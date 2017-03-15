@@ -1,39 +1,37 @@
-package fr.mga.livecoding.jdbc;
+package com.lesfurets.db.dao;
 
-import fr.mga.livecoding.ConnectionManager;
-import fr.mga.livecoding.YearResult;
+import com.lesfurets.db.YearReport;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class YearResultDaoTest {
+public class LegacyYearResultDaoTest {
 
-    private YearResultDao yearResultDao;
+    private LegacyYearResultDao legacyYearResultDao;
 
     @Before
     public void setUp() throws Exception {
         // Given
         Connection connection = ConnectionManager.getConnection();
         ConnectionManager.init(connection);
-        this.yearResultDao = new YearResultDao(connection);
+        this.legacyYearResultDao = new LegacyYearResultDao(connection);
     }
 
     @Test
     public void should_retrieve_year_result() {
         // When
-        List<YearResult> yearResults = yearResultDao.findYearResultBy("IT");
+        List<YearReport> yearReports = legacyYearResultDao.findYearResultBy("IT");
 
         // Then
-        assertThat(yearResults).isNotEmpty();
-        assertThat(yearResults).hasSize(12);
-        assertThat(yearResults).extracting("creationDate")
+        assertThat(yearReports).isNotEmpty();
+        assertThat(yearReports).hasSize(12);
+        assertThat(yearReports).extracting("creationDate")
                 .containsExactly(LocalDate.of(2016, Month.JANUARY, 1),
                         LocalDate.of(2016, Month.FEBRUARY, 1),
                         LocalDate.of(2016, Month.MARCH, 1),
