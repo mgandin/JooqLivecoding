@@ -1,16 +1,15 @@
 package com.lesfurets.db.dao;
 
-import com.lefurets.db.tables.YearResult;
-import com.lesfurets.db.YearReport;
-import org.jooq.impl.DSL;
+import static com.lesfurets.db.tables.YearResult.YEAR_RESULT;
+import static java.util.stream.Collectors.toList;
 
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.lefurets.db.tables.YearResult.YEAR_RESULT;
-import static java.util.stream.Collectors.toList;
+import org.jooq.impl.DSL;
+
+import com.lesfurets.db.YearReport;
 
 public class YearResultDao {
     private Connection connection;
