@@ -38,7 +38,7 @@
     <div class="slides">
         <!-- START -->
 
-        <section class="flushright" data-background="../img/nwx/lesfurets-background-black-01.jpg">
+        <section class="flushright" data-background="../img/devoxx_fr_2017_1920_1080_background.png">
             <h1>JOOQ et JOOλ :</h1>
             <h2>Comment écrire du code propre dans vos DAO</h2>
             <h3>Mathieu Gandin</h3>
@@ -68,7 +68,7 @@
                 <li>Migration de "tout MySQL" à "Cassandra et un peu de MySQL"</li>
                 <li>Framework maison en JDBC</li>
                 <li>Le code existant doit rester proche du SQL</li>
-                <li>Le code existant doit être refactorer pour être dans un style moins spaghetti</li>
+                <li>Le code existant doit être refactoré dans un style moins spaghetti</li>
             </ul>
         </section>
 
@@ -85,61 +85,6 @@
 
         <section class="flushleft" data-background="#333">
             <h2>Live demo</h2>
-        </section>
-
-        <section class="flushleft" data-background="#333">
-            <h2>Alternatives</h2>
-            <ul class="white">
-                <li>SQL mapping avec JDBC</li>
-                <li>Mapping simplifié avec Spring JDBC Template</li>
-                <li>Object relational mapping avec JPA</li>
-            </ul>
-        </section>
-
-        <section class="flushleft" data-background="#333">
-            <h2>SQL Mapping avec JDBC, pros</h2>
-            <ul class="white">
-                <li>Simple, rapide, pas restriction particulière</li>
-                <li>Basé sur la manipulation d'objets de type String</li>
-            </ul>
-        </section>
-
-        <section class="flushleft" data-background="#333">
-            <h2>SQL Mapping avec JDBC, cons</h2>
-            <ul class="white">
-                <li>Pas de validation de syntax avant l'exécution du code</li>
-                <li>Pas toujours simple de vérifier son code avec les tests unitaires</li>
-                <li>Beaucoup de code spaghetti pour gérer les erreurs, ressources et mapping</li>
-            </ul>
-        </section>
-
-        <section class="flushleft" data-background="#333">
-            <h2>SQL Mapping avec le DSL de JOOQ ?</h2>
-            <div class="badge code"></div>
-            <div class="code-wrapper small">
-            <pre>
-            <code class="code java" data-trim data-noescape>
-return DSL.using(connection)
-  .select(YEAR_RESULT.DEPARTEMENT,
-            YEAR_RESULT.MANAGER,
-            YEAR_RESULT.NETPROFIT,
-            YEAR_RESULT.OPERATINGEXPENSE,
-            YEAR_RESULT.TURNOVER,
-            YEAR_RESULT.CREATION_DATE)
-  .from(YEAR_RESULT)
-  .where(YEAR_RESULT.DEPARTEMENT.eq(departement))
-  .orderBy(YEAR_RESULT.CREATION_DATE.asc())
-  .stream()
-  .map(r -> new YearReport(r.get(YEAR_RESULT.DEPARTEMENT),
-            r.get(YEAR_RESULT.MANAGER),
-            r.get(YEAR_RESULT.NETPROFIT),
-            r.get(YEAR_RESULT.OPERATINGEXPENSE),
-            r.get(YEAR_RESULT.TURNOVER),
-            r.get(YEAR_RESULT.CREATION_DATE, LocalDate.class)))
-  .collect(toList());
-            </code>
-        </pre>
-            </div>
         </section>
 
         <section class="flushleft" data-background="#333">
@@ -392,7 +337,7 @@ public List&lt;Tuple2&lt;LocalDateTime, String&gt;&gt; findPlate(Connection conn
         <section class="flushleft" data-background="#333">
             <h2>Nous utilisons aussi JOOλ avec JOOQ</h2>
             <ul class="white">
-                <li>Classes Helper pour un style de code plus functionel et declaratif</li>
+                <li>Classes Helper pour un style de code plus fonctionnel et déclaratif</li>
                 <li>De Function1 à Function16</li>
                 <li>De Tuple1 à Tuple16</li>
                 <li>Sequences</li>
